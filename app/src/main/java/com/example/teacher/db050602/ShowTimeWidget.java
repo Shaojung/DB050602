@@ -16,7 +16,8 @@ public class ShowTimeWidget extends AppWidgetProvider {
     Context context;
     Handler handler = new Handler();
     AppWidgetManager appWidgetManager;
-    static int appWidgetId;
+    int[] appWidgetIds;
+
     Runnable MyUpdateTime = new Runnable() {
         @Override
         public void run() {
@@ -29,13 +30,17 @@ public class ShowTimeWidget extends AppWidgetProvider {
         CharSequence widgetText = sdf.format(new Date());
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.show_time_widget);
         remoteViews.setTextViewText(R.id.appwidget_text, widgetText);
-        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+
+        for (int i: appWidgetIds)
+        {
+            appWidgetManager.updateAppWidget(i, remoteViews);
+        }
+
         handler.postDelayed(MyUpdateTime, 1000);
     }
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
-        ShowTimeWidget.appWidgetId = appWidgetId;
     }
 
     @Override
@@ -43,6 +48,7 @@ public class ShowTimeWidget extends AppWidgetProvider {
         // There may be multiple widgets active, so update all of them
         this.context = context;
         this.appWidgetManager = appWidgetManager;
+        this.appWidgetIds = appWidgetIds;
         for (int appWidgetId : appWidgetIds) {
             updateThisTime();
             updateAppWidget(context, appWidgetManager, appWidgetId);

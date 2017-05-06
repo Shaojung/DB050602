@@ -42,6 +42,16 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/show_time_widget_info" />
         </receiver>
+        <receiver android:name=".BtnTimeWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="UPDATEMYTIME" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/btn_time_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
